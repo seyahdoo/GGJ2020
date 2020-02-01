@@ -9,6 +9,7 @@ public class Goo : MonoBehaviour {
     public Rigidbody2D rigid;
     public SpriteRenderer spriteRenderer;
     public Animator anim;
+    public NormalCamera cam;
     public Collider2D otherVulnerableTrigger;
     public Collider2D winTrigger;
     public Vector2 defaultPosition;
@@ -81,7 +82,7 @@ public class Goo : MonoBehaviour {
             vulnerable = true;
 
         if (other == winTrigger) {
-            game.Reset();
+            cam.Follow(transform);
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -90,11 +91,17 @@ public class Goo : MonoBehaviour {
             vulnerable = false;
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        Goo g = other.gameObject.GetComponent<Goo>();
+        var g = other.gameObject.GetComponent<Goo>();
         if (g != null) {
             g.Cancel();
             rigid.velocity = Vector2.zero;
         }
+
+        var d = other.gameObject.GetComponent<Door>();
+        if (d != null) {
+            d.Open();
+        }
+
     }
     public void WindupStart(Vector2 pos) {
         windupStartPos = pos;
@@ -118,4 +125,4 @@ public class Goo : MonoBehaviour {
             anim.SetTrigger("dashcancel");
         }
     }
-    }
+}
