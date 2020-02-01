@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Right
+  - Left
+  - RightOnly
+  - LeftOnly
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 3606222079
+    locked: 0
+  - name: character
+    uniqueID: 3261576935
+    locked: 0
+  - name: door
+    uniqueID: 3058314433
     locked: 0

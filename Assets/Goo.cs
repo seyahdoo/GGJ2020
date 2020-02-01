@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Goo : MonoBehaviour {
@@ -7,15 +8,16 @@ public class Goo : MonoBehaviour {
     
     public Rigidbody2D rigid;
     public SpriteRenderer spriteRenderer;
+    public Animator anim;
     public Collider2D otherVulnerableTrigger;
     public Collider2D winTrigger;
     public Vector2 defaultPosition;
+    public Vector2 defaultVelocity;
+    public Transform animTransform;
     
-    public bool RightSide = false;
+    public bool rightSide = false;
     public float dashSpeed;
     public float maxWindupTime = 5f;
-    public Color windupStartColor = Color.white;
-    public Color windupChargedColor = Color.red;
     
     public bool windupStarted = false;
     public float windupStartTime;
@@ -25,36 +27,35 @@ public class Goo : MonoBehaviour {
     
     public List<Touch> myTouches = new List<Touch>();
 
+    private void Awake() {
+        Reset();
+    }
+
     public void Reset() {
         transform.position = defaultPosition;
+        rigid.velocity = defaultVelocity;
+        animTransform.right = rigid.velocity;
         windupStarted = false;
         vulnerable = false;
-        rigid.velocity = Vector2.zero;
     }
 
     private void Update()
     {
+        
         myTouches.Clear();
-        if (Input.GetMouseButton(0) && RightSide && (Input.mousePosition.x > (Screen.width / 2))) {
-            var t = new Touch();
-            t.position = Input.mousePosition;
-            myTouches.Add(t);
-        }
         foreach (var touch in Input.touches) {
-            if (touch.position.x > (Screen.width / 2) && RightSide) {
+            if (touch.position.x > (Screen.width / 2) && rightSide) {
                 myTouches.Add(touch);
             }
 
-            if (touch.position.x < (Screen.width / 2) && !RightSide) { 
+            if (touch.position.x < (Screen.width / 2) && !rightSide) { 
                 myTouches.Add(touch);
             }
         }
         
         foreach (var touch in myTouches) {
             if (!windupStarted) {
-                windupStartPos = touch.position;
-                windupStarted = true;
-                windupStartTime = Time.time;
+                WindupStart(touch.position);
             }
             Vector2 windupDirection = touch.position - windupStartPos;
             windupDirection = windupDirection.normalized;
@@ -64,11 +65,15 @@ public class Goo : MonoBehaviour {
         if (myTouches.Count <= 0) {
             if (windupStarted) {
                 float timePass = Time.time - windupStartTime;
-                timePass = Mathf.Min(timePass, 5f);
+                timePass = Mathf.Max(timePass, maxWindupTime);
                 Dash(-windupLastDirection * timePass * timePass);
             }
         }
-        
+
+        if (!windupStarted) {
+            animTransform.right = rigid.velocity;
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D other) {
         //if enter opposite side, be vulnerable
@@ -91,25 +96,26 @@ public class Goo : MonoBehaviour {
             rigid.velocity = Vector2.zero;
         }
     }
-
-    public void WindupDash(Vector2 direction) {
-        var timePass = Time.time - windupStartTime;
-        timePass = Mathf.Min(timePass, maxWindupTime);
-        timePass /= maxWindupTime;
-        var c = Color.Lerp(windupStartColor, windupChargedColor, timePass);
-        spriteRenderer.color = c;
-        windupLastDirection = direction;
+    public void WindupStart(Vector2 pos) {
+        windupStartPos = pos;
+        windupStarted = true;
+        windupStartTime = Time.time;
+        rigid.velocity = Vector2.zero;
+        anim.SetTrigger("windup_start");
     }
-    
+    public void WindupDash(Vector2 direction) {
+        windupLastDirection = direction;
+        animTransform.right = -direction;
+    }
     public void Dash(Vector2 direction) {
         rigid.velocity = direction * dashSpeed;
         windupStarted = false;
+        anim.SetTrigger("dash");
     }
-
     public void Cancel() {
         if (vulnerable) {
             Reset();
+            anim.SetTrigger("dashcancel");
         }
     }
-    
-}
+    }
