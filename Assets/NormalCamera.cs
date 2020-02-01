@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalCamera : MonoBehaviour {
-
     public Transform followee;
     public Transform cameraCenter;
     public float maxx;

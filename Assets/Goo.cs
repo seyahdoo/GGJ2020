@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Goo : MonoBehaviour {
 
     public Game game;
+    public Goo otherGoo;
     
     public Rigidbody2D rigid;
     public SpriteRenderer spriteRenderer;
@@ -25,24 +27,22 @@ public class Goo : MonoBehaviour {
     public Vector2 windupStartPos;
     public Vector2 windupLastDirection;
     public bool vulnerable = false;
-    
-    public List<Touch> myTouches = new List<Touch>();
+    private bool _punching = false;
 
+    public List<Touch> myTouches = new List<Touch>();
     private void Awake() {
         Reset();
     }
-
     public void Reset() {
+        gameObject.SetActive(true);
         transform.position = defaultPosition;
         rigid.velocity = defaultVelocity;
         animTransform.right = rigid.velocity;
         windupStarted = false;
         vulnerable = false;
     }
-
     private void Update()
     {
-        
         myTouches.Clear();
         foreach (var touch in Input.touches) {
             if (touch.position.x > (Screen.width / 2) && rightSide) {
@@ -53,7 +53,6 @@ public class Goo : MonoBehaviour {
                 myTouches.Add(touch);
             }
         }
-        
         foreach (var touch in myTouches) {
             if (!windupStarted) {
                 WindupStart(touch.position);
@@ -62,7 +61,6 @@ public class Goo : MonoBehaviour {
             windupDirection = windupDirection.normalized;
             WindupDash(windupDirection); 
         }
-
         if (myTouches.Count <= 0) {
             if (windupStarted) {
                 float timePass = Time.time - windupStartTime;
@@ -70,19 +68,17 @@ public class Goo : MonoBehaviour {
                 Dash(-windupLastDirection * timePass * timePass);
             }
         }
-
         if (!windupStarted) {
             animTransform.right = rigid.velocity;
         }
-
     }
     private void OnTriggerEnter2D(Collider2D other) {
         //if enter opposite side, be vulnerable
         if (other == otherVulnerableTrigger)
             vulnerable = true;
-
         if (other == winTrigger) {
             cam.Follow(transform);
+            otherGoo.gameObject.SetActive(false);
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -96,17 +92,23 @@ public class Goo : MonoBehaviour {
             g.Cancel();
             rigid.velocity = Vector2.zero;
         }
-
         var d = other.gameObject.GetComponent<Door>();
         if (d != null) {
             if (d.Open()) {
-                //Win                
+                //Win sequence    
             }
             else {
-                //Goto Start
+                if (!_punching) {
+                    StartCoroutine(nameof(DoorPunch));
+                }
             }
         }
-
+    }
+    private IEnumerator DoorPunch() {
+        _punching = true;
+        yield return new WaitForSeconds(1f);
+        game.GotoStart();
+        _punching = false;
     }
     public void WindupStart(Vector2 pos) {
         windupStartPos = pos;

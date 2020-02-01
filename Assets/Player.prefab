@@ -78,9 +78,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   game: {fileID: 0}
+  otherGoo: {fileID: 0}
   rigid: {fileID: 5881521753397981502}
   spriteRenderer: {fileID: 5219053522466075776}
   anim: {fileID: 5579921848086952788}
+  cam: {fileID: 0}
   otherVulnerableTrigger: {fileID: 0}
   winTrigger: {fileID: 0}
   defaultPosition: {x: 6, y: 0}
@@ -130,7 +132,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.39884147
 --- !u!1 &6225169633433928643
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +202,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1033390361
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7630ea888c91604fac89891d301b491, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

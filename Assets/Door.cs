@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour {
-    private List<GameObject> doorStates;
+    public List<GameObject> doorStates;
     public bool Open() {
         for (int i = 0; i < doorStates.Count; i++) {
             if (doorStates[i].activeSelf) {

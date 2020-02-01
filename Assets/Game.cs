@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Game : MonoBehaviour {
-    
     public List<Goo> goos = new List<Goo>();
     public List<Door> doors = new List<Door>();
     public NormalCamera cam;
-    
-    
     public void Reset() {
         foreach (var goo in goos) {
             goo.Reset();
@@ -18,11 +15,10 @@ public class Game : MonoBehaviour {
         }
         cam.StopFollow();
     }
-
     public void GotoStart() {
         foreach (var goo in goos) {
             goo.Reset();
         }
+        cam.StopFollow();
     }
-    
 }
