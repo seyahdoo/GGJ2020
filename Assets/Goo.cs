@@ -8,6 +8,9 @@ public class Goo : MonoBehaviour {
     
     public Rigidbody2D rigid;
     public SpriteRenderer spriteRenderer;
+    public Collider2D otherVulnerableTrigger;
+    public Vector2 defaultPosition;
+
     public bool RightSide = false;
     public float dashSpeed;
     public float maxWindupTime = 5f;
@@ -18,15 +21,32 @@ public class Goo : MonoBehaviour {
     public float windupStartTime;
     public Vector2 windupStartPos;
     public Vector2 windupLastDirection;
+    public bool vulnerable = false;
+    
     
     public List<Touch> myTouches = new List<Touch>();
-    
+
+    public void Reset() {
+        transform.position = defaultPosition;
+        windupStarted = false;
+        vulnerable = false;
+    }
+
     // Update is called once per frame
     private void Update()
     {
         myTouches.Clear();
+        if (Input.GetMouseButton(0) && RightSide && (Input.mousePosition.x > (Screen.width / 2))) {
+            var t = new Touch();
+            t.position = Input.mousePosition;
+            myTouches.Add(t);
+        }
         foreach (var touch in Input.touches) {
-            if ((touch.position.x > (Screen.width / 2) && RightSide) || (touch.position.x < (Screen.width / 2) && !RightSide)) {
+            if (touch.position.x > (Screen.width / 2) && RightSide) {
+                myTouches.Add(touch);
+            }
+
+            if (touch.position.x < (Screen.width / 2) && !RightSide) { 
                 myTouches.Add(touch);
             }
         }
@@ -46,10 +66,23 @@ public class Goo : MonoBehaviour {
             if (windupStarted) {
                 float timePass = Time.time - windupStartTime;
                 timePass = Mathf.Min(timePass, 5f);
-                Dash(-windupLastDirection * timePass);
+                Dash(-windupLastDirection * timePass * timePass);
             }
         }
         
+    }
+
+    private void OnTriggerExit(Collider other) {
+        //if exit opposite side, not be vulnerable
+        if (other == otherVulnerableTrigger)
+            vulnerable = false;
+        
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        //if enter opposite side, be vulnerable
+        if (other == otherVulnerableTrigger)
+            vulnerable = true;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -74,7 +107,7 @@ public class Goo : MonoBehaviour {
     }
 
     public void Cancel() {
-                
+        
     }
     
 }

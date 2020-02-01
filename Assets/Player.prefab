@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5881521753397981440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.23, y: -0.04, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.3522, y: 2.3522, z: 2.3522}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -47,14 +47,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigid: {fileID: 5881521753397981502}
-  SpriteRenderer: {fileID: 540340573}
+  spriteRenderer: {fileID: 540340573}
+  otherVulnerableTrigger: {fileID: 0}
   RightSide: 1
-  dashSpeed: 2
-  maxWindupTime: 5
+  dashSpeed: 8
+  maxWindupTime: 2
+  windupStartColor: {r: 1, g: 1, b: 1, a: 1}
+  windupChargedColor: {r: 1, g: 0, b: 0, a: 1}
   windupStarted: 0
   windupStartTime: 0
   windupStartPos: {x: 0, y: 0}
   windupLastDirection: {x: 0, y: 0}
+  vulnerable: 0
 --- !u!50 &5881521753397981502
 Rigidbody2D:
   serializedVersion: 4
@@ -135,7 +139,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 5881521753397981440}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 9d634d5e1bab3ad41a3b6fbb17012031, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
