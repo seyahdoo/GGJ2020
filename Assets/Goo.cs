@@ -23,12 +23,7 @@ public class Goo : MonoBehaviour {
     public Vector2 windupLastDirection;
     public bool vulnerable = false;
     
-    
     public List<Touch> myTouches = new List<Touch>();
-
-    private void Awake() {
-        game.goos.Add(this);
-    }
 
     public void Reset() {
         transform.position = defaultPosition;
@@ -37,7 +32,6 @@ public class Goo : MonoBehaviour {
         rigid.velocity = Vector2.zero;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         myTouches.Clear();
