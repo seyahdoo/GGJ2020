@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Schema;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Goo : MonoBehaviour {
+
+    public Game game;
     
     public Rigidbody2D rigid;
     public SpriteRenderer spriteRenderer;
     public Collider2D otherVulnerableTrigger;
+    public Collider2D winTrigger;
     public Vector2 defaultPosition;
-
+    
     public bool RightSide = false;
     public float dashSpeed;
     public float maxWindupTime = 5f;
@@ -26,10 +26,15 @@ public class Goo : MonoBehaviour {
     
     public List<Touch> myTouches = new List<Touch>();
 
+    private void Awake() {
+        game.goos.Add(this);
+    }
+
     public void Reset() {
         transform.position = defaultPosition;
         windupStarted = false;
         vulnerable = false;
+        rigid.velocity = Vector2.zero;
     }
 
     // Update is called once per frame
@@ -71,24 +76,25 @@ public class Goo : MonoBehaviour {
         }
         
     }
-
-    private void OnTriggerExit(Collider other) {
-        //if exit opposite side, not be vulnerable
-        if (other == otherVulnerableTrigger)
-            vulnerable = false;
-        
-    }
-
-    private void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         //if enter opposite side, be vulnerable
         if (other == otherVulnerableTrigger)
             vulnerable = true;
-    }
 
+        if (other == winTrigger) {
+            game.Reset();
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other) {
+        //if exit opposite side, not be vulnerable
+        if (other == otherVulnerableTrigger)
+            vulnerable = false;
+    }
     private void OnCollisionEnter2D(Collision2D other) {
         Goo g = other.gameObject.GetComponent<Goo>();
         if (g != null) {
             g.Cancel();
+            rigid.velocity = Vector2.zero;
         }
     }
 
@@ -107,7 +113,9 @@ public class Goo : MonoBehaviour {
     }
 
     public void Cancel() {
-        
+        if (vulnerable) {
+            Reset();
+        }
     }
     
 }
