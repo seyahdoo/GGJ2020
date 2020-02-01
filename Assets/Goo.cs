@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class Goo : MonoBehaviour {
 
+    public AudioSource win;
+    public AudioSource collision;
+    public AudioSource windup;
+    public AudioSource windupLoop;
+    public AudioSource dash;
+    public AudioSource doorCollision;
+
+    public Transform winPos;
+    public Vector2 winVelocity;
+    
     public Game game;
     public Goo otherGoo;
     
@@ -64,8 +74,8 @@ public class Goo : MonoBehaviour {
         if (myTouches.Count <= 0) {
             if (windupStarted) {
                 float timePass = Time.time - windupStartTime;
-                timePass = Mathf.Max(timePass, maxWindupTime);
-                Dash(-windupLastDirection * timePass * timePass);
+                timePass = Mathf.Clamp(timePass, 0f, maxWindupTime);
+                Dash(-windupLastDirection.normalized * timePass * timePass);
             }
         }
         if (!windupStarted) {
@@ -87,22 +97,55 @@ public class Goo : MonoBehaviour {
             vulnerable = false;
     }
     private void OnCollisionEnter2D(Collision2D other) {
+        
         var g = other.gameObject.GetComponent<Goo>();
         if (g != null) {
+            collision.Stop(); 
+            collision.Play();
             g.Cancel();
             rigid.velocity = Vector2.zero;
         }
         var d = other.gameObject.GetComponent<Door>();
         if (d != null) {
             if (d.Open()) {
-                //Win sequence    
+                StartCoroutine(nameof(WinSequence));
             }
             else {
                 if (!_punching) {
+                    doorCollision.Stop();
+                    doorCollision.Play();
                     StartCoroutine(nameof(DoorPunch));
                 }
             }
         }
+    }
+    private IEnumerator WinSequence() {
+        //go down
+        while (
+            Vector3.Distance(transform.position, winPos.position) < .1f 
+            && 
+            Quaternion.Angle(transform.rotation, winPos.rotation) < 2f
+            ) {
+            transform.position = Vector3.Lerp(transform.position, winPos.position, .1f * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, winPos.rotation, .1f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        var tr = transform;
+        tr.position = winPos.position;
+        tr.rotation = winPos.rotation;
+        //walk
+        rigid.velocity = winVelocity;
+        
+        yield return new WaitForSeconds(3f);
+        //fade out
+        // while (spriteRenderer.color.a > .002f) {
+        //     Color c = spriteRenderer.color;
+        //     // c.a 
+        //
+        // }
+        
+        
     }
     private IEnumerator DoorPunch() {
         _punching = true;
@@ -116,6 +159,10 @@ public class Goo : MonoBehaviour {
         windupStartTime = Time.time;
         rigid.velocity = Vector2.zero;
         anim.SetTrigger("windup_start");
+        windup.Stop();
+        windup.Play();
+        windupLoop.Stop();
+        windupLoop.Play();
     }
     public void WindupDash(Vector2 direction) {
         windupLastDirection = direction;
@@ -125,6 +172,10 @@ public class Goo : MonoBehaviour {
         rigid.velocity = direction * dashSpeed;
         windupStarted = false;
         anim.SetTrigger("dash");
+        windup.Stop();
+        windupLoop.Stop();
+        dash.Stop();
+        dash.Play();
     }
     public void Cancel() {
         if (vulnerable) {
