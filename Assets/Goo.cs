@@ -14,6 +14,7 @@ public class Goo : MonoBehaviour {
 
     public Transform winPos;
     public Vector2 winVelocity;
+    public SpriteRenderer halo;
     
     public Game game;
     public Goo otherGoo;
@@ -31,6 +32,7 @@ public class Goo : MonoBehaviour {
     public bool rightSide = false;
     public float dashSpeed;
     public float maxWindupTime = 5f;
+    public float fadeSpeed = .5f;
     
     public bool windupStarted = false;
     public float windupStartTime;
@@ -38,6 +40,7 @@ public class Goo : MonoBehaviour {
     public Vector2 windupLastDirection;
     public bool vulnerable = false;
     private bool _punching = false;
+    private bool winsequence = false;
 
     public List<Touch> myTouches = new List<Touch>();
     private void Awake() {
@@ -50,6 +53,9 @@ public class Goo : MonoBehaviour {
         animTransform.right = rigid.velocity;
         windupStarted = false;
         vulnerable = false;
+        winsequence = false;
+        anim.Play("idle");
+        spriteRenderer.color = Color.white;
     }
     private void Update()
     {
@@ -78,7 +84,7 @@ public class Goo : MonoBehaviour {
                 Dash(-windupLastDirection.normalized * timePass * timePass);
             }
         }
-        if (!windupStarted) {
+        if (!windupStarted && !winsequence) {
             animTransform.right = rigid.velocity;
         }
     }
@@ -120,32 +126,54 @@ public class Goo : MonoBehaviour {
         }
     }
     private IEnumerator WinSequence() {
-        //go down
-        while (
-            Vector3.Distance(transform.position, winPos.position) < .1f 
-            && 
-            Quaternion.Angle(transform.rotation, winPos.rotation) < 2f
-            ) {
-            transform.position = Vector3.Lerp(transform.position, winPos.position, .1f * Time.deltaTime);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, winPos.rotation, .1f * Time.deltaTime);
+        win.Stop();
+        win.Play();
+        var a = 0f;
+        while (true) {
+            a += Time.deltaTime*2;
+            win.volume = a;
+            var haloColor = halo.color;
+            haloColor.a = a;
+            halo.color = haloColor;
+            if (a >= 1f) {
+                break;
+            }
             yield return new WaitForEndOfFrame();
         }
-
+        yield return new WaitForSeconds(.5f);
+        rigid.velocity = Vector2.zero;
+        winsequence = true;
+        //go down
+        while (
+            Vector3.Distance(transform.position, winPos.position) > .1f 
+            // && 
+            // Quaternion.Angle(transform.rotation, winPos.rotation) < 2f
+            ) {
+            
+            transform.position = Vector3.Lerp(transform.position, winPos.position, .6f * Time.deltaTime);
+            animTransform.rotation = Quaternion.RotateTowards(animTransform.rotation, winPos.rotation, 40f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+        anim.SetTrigger("win");
         var tr = transform;
         tr.position = winPos.position;
-        tr.rotation = winPos.rotation;
+        animTransform.rotation = winPos.rotation;
         //walk
         rigid.velocity = winVelocity;
         
         yield return new WaitForSeconds(3f);
         //fade out
-        // while (spriteRenderer.color.a > .002f) {
-        //     Color c = spriteRenderer.color;
-        //     // c.a 
-        //
-        // }
-        
-        
+        while (spriteRenderer.color.a > 0f) {
+            Color c = spriteRenderer.color;
+            c.a -= fadeSpeed * Time.deltaTime;
+            spriteRenderer.color = c;
+            halo.color = c;
+            yield return new WaitForEndOfFrame();
+        }
+        yield return new WaitForSeconds(1f);
+        winsequence = false;
+        win.Stop();
+        game.Reset();
     }
     private IEnumerator DoorPunch() {
         _punching = true;

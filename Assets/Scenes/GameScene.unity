@@ -1549,6 +1549,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 3720876142979663788, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3720876142979663788, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219053522466075776, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981440, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_Name
@@ -1562,12 +1577,12 @@ PrefabInstance:
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: 12.82
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3.75
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
@@ -1613,6 +1628,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.352201
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.352201
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.3522
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
@@ -1689,6 +1719,21 @@ PrefabInstance:
       propertyPath: doorCollision
       value: 
       objectReference: {fileID: 416295876}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: winVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: winPos
+      value: 
+      objectReference: {fileID: 1347621444}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: winVelocity.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981502, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -1794,6 +1839,36 @@ Transform:
   m_Father: {fileID: 1300040743}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &972943243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 972943244}
+  m_Layer: 9
+  m_Name: WinR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &972943244
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972943243}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0.23241758, y: 1.8000002, z: 0}
+  m_LocalScale: {x: 2.3522005, y: 0.045863483, z: 2.3522}
+  m_Children: []
+  m_Father: {fileID: 1650143395}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &973067011
 GameObject:
   m_ObjectHideFlags: 0
@@ -2196,6 +2271,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1347621443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347621444}
+  m_Layer: 9
+  m_Name: WinL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1347621444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347621443}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0.26751417, y: 1.8000002, z: 0}
+  m_LocalScale: {x: 2.3522005, y: 0.045863483, z: 2.3522}
+  m_Children: []
+  m_Father: {fileID: 1650143395}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1 &1358363449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,6 +2976,8 @@ Transform:
   - {fileID: 1553913744}
   - {fileID: 1919834163}
   - {fileID: 2135269136}
+  - {fileID: 1347621444}
+  - {fileID: 972943244}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3609,12 +3716,12 @@ PrefabInstance:
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: -12.82
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -3.75
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981500, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
@@ -3663,31 +3770,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
-      propertyPath: game
-      value: 
-      objectReference: {fileID: 94601946}
-    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
-        type: 3}
-      propertyPath: otherVulnerableTrigger
-      value: 
-      objectReference: {fileID: 887914864}
-    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
-        type: 3}
-      propertyPath: winTrigger
-      value: 
-      objectReference: {fileID: 745016975}
-    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
-        type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 519420030}
-    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
-        type: 3}
-      propertyPath: otherGoo
-      value: 
-      objectReference: {fileID: 877117314}
-    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
-        type: 3}
       propertyPath: win
       value: 
       objectReference: {fileID: 1682786445}
@@ -3716,6 +3798,36 @@ PrefabInstance:
       propertyPath: doorCollision
       value: 
       objectReference: {fileID: 416295876}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: winPos
+      value: 
+      objectReference: {fileID: 972943244}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: game
+      value: 
+      objectReference: {fileID: 94601946}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: otherGoo
+      value: 
+      objectReference: {fileID: 877117314}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420030}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: otherVulnerableTrigger
+      value: 
+      objectReference: {fileID: 887914864}
+    - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: winTrigger
+      value: 
+      objectReference: {fileID: 745016975}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47a9a5f369cd444eacf50787c5b4f84, type: 3}
 --- !u!1001 &8334029261618023587
@@ -3784,6 +3896,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "kap\u0131L"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334029261539453118, guid: 3421115e889a70b4e903997b365b4184,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8334029262485334273, guid: 3421115e889a70b4e903997b365b4184,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3421115e889a70b4e903997b365b4184, type: 3}
