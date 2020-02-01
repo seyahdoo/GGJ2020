@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Goo : MonoBehaviour {
 
+    public AudioSource win;
+    public AudioSource collision;
+    public AudioSource windup;
+    public AudioSource windupLoop;
+    public AudioSource dash;
+    public AudioSource doorCollision;
+    
+
     public Game game;
     public Goo otherGoo;
     
@@ -87,8 +95,11 @@ public class Goo : MonoBehaviour {
             vulnerable = false;
     }
     private void OnCollisionEnter2D(Collision2D other) {
+        
         var g = other.gameObject.GetComponent<Goo>();
         if (g != null) {
+            collision.Stop(); 
+            collision.Play();
             g.Cancel();
             rigid.velocity = Vector2.zero;
         }
@@ -99,6 +110,8 @@ public class Goo : MonoBehaviour {
             }
             else {
                 if (!_punching) {
+                    doorCollision.Stop();
+                    doorCollision.Play();
                     StartCoroutine(nameof(DoorPunch));
                 }
             }
@@ -116,6 +129,10 @@ public class Goo : MonoBehaviour {
         windupStartTime = Time.time;
         rigid.velocity = Vector2.zero;
         anim.SetTrigger("windup_start");
+        windup.Stop();
+        windup.Play();
+        windupLoop.Stop();
+        windupLoop.Play();
     }
     public void WindupDash(Vector2 direction) {
         windupLastDirection = direction;
@@ -125,6 +142,10 @@ public class Goo : MonoBehaviour {
         rigid.velocity = direction * dashSpeed;
         windupStarted = false;
         anim.SetTrigger("dash");
+        windup.Stop();
+        windupLoop.Stop();
+        dash.Stop();
+        dash.Play();
     }
     public void Cancel() {
         if (vulnerable) {
