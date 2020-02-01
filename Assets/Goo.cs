@@ -55,6 +55,7 @@ public class Goo : MonoBehaviour {
     
     public void Dash(Vector2 direction) {
         rb.velocity = direction * DashSpeedMultiplier;
+        windupStarted = false;
     }
 
     public void Cancel() {
