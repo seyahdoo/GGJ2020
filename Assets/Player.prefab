@@ -46,12 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeda3404d43405f4aba1e5e3681f59a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 11400000, guid: 1920c6c0946ee834eaaa73d055717b8e, type: 2}
   rigid: {fileID: 5881521753397981502}
   spriteRenderer: {fileID: 540340573}
   otherVulnerableTrigger: {fileID: 0}
+  winTrigger: {fileID: 0}
+  defaultPosition: {x: 6, y: 0}
   RightSide: 1
-  dashSpeed: 8
-  maxWindupTime: 2
+  dashSpeed: 15
+  maxWindupTime: 1.5
   windupStartColor: {r: 1, g: 1, b: 1, a: 1}
   windupChargedColor: {r: 1, g: 0, b: 0, a: 1}
   windupStarted: 0
