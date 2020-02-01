@@ -4,9 +4,20 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
     private List<GameObject> doorStates;
-    
     public bool Open() {
-        
-        return true;
+        for (int i = 0; i < doorStates.Count; i++) {
+            if (doorStates[i].activeSelf) {
+                doorStates[i].SetActive(false);
+                doorStates[i+1].SetActive(true);
+                return i >= doorStates.Count - 2;
+            }
+        }
+        return false;
+    }
+    public void Reset(){
+        foreach (var d in doorStates) {
+            d.SetActive(false);
+        }
+        doorStates[0].SetActive(true);
     }
 }

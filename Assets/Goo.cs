@@ -99,7 +99,12 @@ public class Goo : MonoBehaviour {
 
         var d = other.gameObject.GetComponent<Door>();
         if (d != null) {
-            d.Open();
+            if (d.Open()) {
+                //Win                
+            }
+            else {
+                //Goto Start
+            }
         }
 
     }

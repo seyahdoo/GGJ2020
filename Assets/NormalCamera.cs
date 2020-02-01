@@ -8,7 +8,6 @@ public class NormalCamera : MonoBehaviour {
     public Transform cameraCenter;
     public float maxx;
     public float minx;
-
     void Update() {
         float x = followee.position.x;
         float myx = transform.position.x;
@@ -18,13 +17,10 @@ public class NormalCamera : MonoBehaviour {
         pos.x = newx;
         transform.position = pos;
     }
-
     public void Follow(Transform tr) {
         followee = tr;
     }
-
     public void StopFollow() {
         followee = cameraCenter;
     }
-    
 }
