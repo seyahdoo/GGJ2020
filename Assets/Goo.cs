@@ -11,8 +11,10 @@ public class Goo : MonoBehaviour {
     public AudioSource windupLoop;
     public AudioSource dash;
     public AudioSource doorCollision;
-    
 
+    public Transform winPos;
+    public Vector2 winVelocity;
+    
     public Game game;
     public Goo otherGoo;
     
@@ -72,8 +74,8 @@ public class Goo : MonoBehaviour {
         if (myTouches.Count <= 0) {
             if (windupStarted) {
                 float timePass = Time.time - windupStartTime;
-                timePass = Mathf.Max(timePass, maxWindupTime);
-                Dash(-windupLastDirection * timePass * timePass);
+                timePass = Mathf.Clamp(timePass, 0f, maxWindupTime);
+                Dash(-windupLastDirection.normalized * timePass * timePass);
             }
         }
         if (!windupStarted) {
@@ -106,7 +108,7 @@ public class Goo : MonoBehaviour {
         var d = other.gameObject.GetComponent<Door>();
         if (d != null) {
             if (d.Open()) {
-                //Win sequence    
+                StartCoroutine(nameof(WinSequence));
             }
             else {
                 if (!_punching) {
@@ -116,6 +118,34 @@ public class Goo : MonoBehaviour {
                 }
             }
         }
+    }
+    private IEnumerator WinSequence() {
+        //go down
+        while (
+            Vector3.Distance(transform.position, winPos.position) < .1f 
+            && 
+            Quaternion.Angle(transform.rotation, winPos.rotation) < 2f
+            ) {
+            transform.position = Vector3.Lerp(transform.position, winPos.position, .1f * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, winPos.rotation, .1f * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+
+        var tr = transform;
+        tr.position = winPos.position;
+        tr.rotation = winPos.rotation;
+        //walk
+        rigid.velocity = winVelocity;
+        
+        yield return new WaitForSeconds(3f);
+        //fade out
+        // while (spriteRenderer.color.a > .002f) {
+        //     Color c = spriteRenderer.color;
+        //     // c.a 
+        //
+        // }
+        
+        
     }
     private IEnumerator DoorPunch() {
         _punching = true;
