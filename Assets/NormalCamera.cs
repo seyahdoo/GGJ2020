@@ -10,7 +10,7 @@ public class NormalCamera : MonoBehaviour {
     void Update() {
         float x = followee.position.x;
         float myx = transform.position.x;
-        float newx = Mathf.Lerp(myx, x, .1f);
+        float newx = Mathf.Lerp(myx, x, .8f * Time.deltaTime);
         newx = Mathf.Clamp(newx, minx, maxx);
         var pos = transform.position;
         pos.x = newx;
@@ -21,5 +21,6 @@ public class NormalCamera : MonoBehaviour {
     }
     public void StopFollow() {
         followee = cameraCenter;
+        transform.position = cameraCenter.position;
     }
 }

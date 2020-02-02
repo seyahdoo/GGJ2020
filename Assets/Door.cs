@@ -14,6 +14,15 @@ public class Door : MonoBehaviour {
         }
         return false;
     }
+    public bool WillFinal(){
+        for (int i = 0; i < doorStates.Count; i++) {
+            if (doorStates[i].activeSelf) {
+                return i >= doorStates.Count - 2;
+            }
+        }
+        return false;
+    }
+    
     public void Reset(){
         foreach (var d in doorStates) {
             d.SetActive(false);
