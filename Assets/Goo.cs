@@ -106,7 +106,9 @@ public class Goo : MonoBehaviour {
         if (other == winTrigger && !crashing) {
             cam.Follow(transform);
             otherGoo.gameObject.SetActive(false);
-            rigid.velocity = rigid.velocity.normalized * winApproachSpeed;
+            Vector2 vel = rigid.velocity;
+            vel.x = rightSide ? -winApproachSpeed : winApproachSpeed;
+            rigid.velocity = vel;
             if (otherDoor.WillFinal()) {
                 win.Stop();
                 win.Play();
@@ -244,6 +246,7 @@ public class Goo : MonoBehaviour {
     IEnumerator CrashSequence() {
         crashing = true;
         anim.SetTrigger("crashed");
+        rigid.velocity = rigid.velocity.normalized * 2f;
         yield return new WaitForSeconds(.5f);
         Reset();
     }
