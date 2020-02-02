@@ -97,7 +97,6 @@ public class Goo : MonoBehaviour {
                 Dash(-windupLastDirection.normalized * timePass * timePass);
             }
         }
-        
     }
     private void OnTriggerEnter2D(Collider2D other) {
         //if enter opposite side, be vulnerable
