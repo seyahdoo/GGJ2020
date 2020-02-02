@@ -29,7 +29,7 @@ public class Splash : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
         black.color = Color.black;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         while (true) {
             a -= Time.deltaTime*4;
             var c = image1.color;
@@ -52,7 +52,7 @@ public class Splash : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
         black.color = Color.clear;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         game.Reset();
         while (true) {
             a -= Time.deltaTime*4;
