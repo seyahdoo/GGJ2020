@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Goo : MonoBehaviour {
 
     public AudioSource win;
+    public AudioSource partialWin;
     public AudioSource collision;
     public AudioSource windup;
     public AudioSource windupLoop;
@@ -113,6 +114,10 @@ public class Goo : MonoBehaviour {
                 win.Play();
                 StartCoroutine(nameof(WinSoundFadeIn));
             }
+            else {
+                partialWin.Stop();
+                partialWin.Play();
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -135,6 +140,7 @@ public class Goo : MonoBehaviour {
             }
             else {
                 if (!_punching) {
+                    partialWin.Stop();
                     doorCollision.Stop();
                     doorCollision.Play();
                     StartCoroutine(nameof(DoorPunch));
