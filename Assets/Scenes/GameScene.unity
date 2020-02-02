@@ -1894,10 +1894,30 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6207540535692842672, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207540535692842672, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6225169633433928643, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579093649410470139, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.178
+      objectReference: {fileID: 0}
+    - target: {fileID: 7579093649410470139, guid: b47a9a5f369cd444eacf50787c5b4f84,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b47a9a5f369cd444eacf50787c5b4f84, type: 3}
@@ -1956,6 +1976,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c4b753e65410b74fb84866ea5fd10d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 94601946}
   black: {fileID: 1781051283}
   image1: {fileID: 608962735}
   image2: {fileID: 428354483}
@@ -3293,7 +3314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1665274519}
   m_Layer: 0
-  m_Name: Splash
+  m_Name: SplashRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4319,12 +4340,12 @@ PrefabInstance:
     - target: {fileID: 8334029261539453118, guid: 3421115e889a70b4e903997b365b4184,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8334029262485334273, guid: 3421115e889a70b4e903997b365b4184,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3421115e889a70b4e903997b365b4184, type: 3}

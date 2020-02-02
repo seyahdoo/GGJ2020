@@ -53,6 +53,7 @@ public class Splash : MonoBehaviour {
         }
         black.color = Color.clear;
         yield return new WaitForSeconds(2f);
+        game.Reset();
         while (true) {
             a -= Time.deltaTime*4;
             var c = image2.color;
@@ -63,8 +64,6 @@ public class Splash : MonoBehaviour {
             }
             yield return new WaitForEndOfFrame();
         }
-        
-        game.Reset();
     }
     
 }

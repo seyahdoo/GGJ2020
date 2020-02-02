@@ -21,5 +21,6 @@ public class NormalCamera : MonoBehaviour {
     }
     public void StopFollow() {
         followee = cameraCenter;
+        transform.position = cameraCenter.position;
     }
 }
