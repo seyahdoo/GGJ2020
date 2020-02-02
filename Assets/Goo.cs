@@ -66,7 +66,12 @@ public class Goo : MonoBehaviour {
     private void Update()
     {
         anim.SetFloat("current_speed", rigid.velocity.magnitude);
-
+        if(winsequence) return;
+        
+        if (!windupStarted) {
+            animTransform.right = rigid.velocity;
+        }
+        
         myTouches.Clear();
         foreach (var touch in Input.touches) {
             if (touch.position.x > (Screen.width / 2) && rightSide) {
@@ -92,9 +97,7 @@ public class Goo : MonoBehaviour {
                 Dash(-windupLastDirection.normalized * timePass * timePass);
             }
         }
-        if (!windupStarted && !winsequence) {
-            animTransform.right = rigid.velocity;
-        }
+        
     }
     private void OnTriggerEnter2D(Collider2D other) {
         //if enter opposite side, be vulnerable
