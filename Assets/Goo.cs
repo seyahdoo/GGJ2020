@@ -61,9 +61,12 @@ public class Goo : MonoBehaviour {
         winsequence = false;
         anim.Play("idle");
         spriteRenderer.color = Color.white;
+        crashing = false;
     }
     private void Update()
     {
+        anim.SetFloat("current_speed", rigid.velocity.magnitude);
+
         myTouches.Clear();
         foreach (var touch in Input.touches) {
             if (touch.position.x > (Screen.width / 2) && rightSide) {
@@ -97,7 +100,7 @@ public class Goo : MonoBehaviour {
         //if enter opposite side, be vulnerable
         if (other == otherVulnerableTrigger)
             vulnerable = true;
-        if (other == winTrigger) {
+        if (other == winTrigger && !crashing) {
             cam.Follow(transform);
             otherGoo.gameObject.SetActive(false);
             rigid.velocity = rigid.velocity.normalized * winApproachSpeed;
@@ -234,7 +237,9 @@ public class Goo : MonoBehaviour {
         }
     }
 
+    private bool crashing = false;
     IEnumerator CrashSequence() {
+        crashing = true;
         anim.SetTrigger("crashed");
         yield return new WaitForSeconds(.5f);
         Reset();

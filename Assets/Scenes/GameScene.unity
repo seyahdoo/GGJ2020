@@ -4256,7 +4256,7 @@ PrefabInstance:
     - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
       propertyPath: winApproachSpeed
-      value: 3
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 5881521753397981501, guid: b47a9a5f369cd444eacf50787c5b4f84,
         type: 3}
