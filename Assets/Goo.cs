@@ -119,7 +119,7 @@ public class Goo : MonoBehaviour {
             collision.Stop(); 
             collision.Play();
             g.Cancel();
-            rigid.velocity = Vector2.zero;
+            // rigid.velocity = Vector2.zero;
         }
         var d = other.gameObject.GetComponent<Door>();
         if (d != null) {
@@ -217,6 +217,7 @@ public class Goo : MonoBehaviour {
     public void WindupDash(Vector2 direction) {
         windupLastDirection = direction;
         animTransform.right = -direction;
+        rigid.velocity = Vector2.zero;
     }
     public void Dash(Vector2 direction) {
         rigid.velocity = direction * dashSpeed;
@@ -229,8 +230,14 @@ public class Goo : MonoBehaviour {
     }
     public void Cancel() {
         if (vulnerable) {
-            Reset();
-            anim.SetTrigger("dashcancel");
+            StartCoroutine(nameof(CrashSequence));
         }
     }
+
+    IEnumerator CrashSequence() {
+        anim.SetTrigger("crashed");
+        yield return new WaitForSeconds(.5f);
+        Reset();
+    }
+    
 }
