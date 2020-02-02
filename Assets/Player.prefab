@@ -168,6 +168,8 @@ MonoBehaviour:
   winPos: {fileID: 0}
   winVelocity: {x: -1, y: 0}
   halo: {fileID: 6207540535692842672}
+  winApproachSpeed: 1
+  otherDoor: {fileID: 0}
   game: {fileID: 0}
   otherGoo: {fileID: 0}
   rigid: {fileID: 5881521753397981502}

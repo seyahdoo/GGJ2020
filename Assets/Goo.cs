@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Goo : MonoBehaviour {
 
@@ -12,9 +13,13 @@ public class Goo : MonoBehaviour {
     public AudioSource dash;
     public AudioSource doorCollision;
 
+    public Splash splash;
+    
     public Transform winPos;
     public Vector2 winVelocity;
     public SpriteRenderer halo;
+    public float winApproachSpeed = 1f;
+    public Door otherDoor;
     
     public Game game;
     public Goo otherGoo;
@@ -95,6 +100,12 @@ public class Goo : MonoBehaviour {
         if (other == winTrigger) {
             cam.Follow(transform);
             otherGoo.gameObject.SetActive(false);
+            rigid.velocity = rigid.velocity.normalized * winApproachSpeed;
+            if (otherDoor.WillFinal()) {
+                win.Stop();
+                win.Play();
+                StartCoroutine(nameof(WinSoundFadeIn));
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
@@ -103,7 +114,6 @@ public class Goo : MonoBehaviour {
             vulnerable = false;
     }
     private void OnCollisionEnter2D(Collision2D other) {
-        
         var g = other.gameObject.GetComponent<Goo>();
         if (g != null) {
             collision.Stop(); 
@@ -125,29 +135,26 @@ public class Goo : MonoBehaviour {
             }
         }
     }
-    private IEnumerator WinSequence() {
-        win.Stop();
-        win.Play();
+    private IEnumerator WinSoundFadeIn() {
         var a = 0f;
         while (true) {
             a += Time.deltaTime*2;
             win.volume = a;
-            var haloColor = halo.color;
-            haloColor.a = a;
-            halo.color = haloColor;
             if (a >= 1f) {
                 break;
             }
             yield return new WaitForEndOfFrame();
         }
+    }
+    private IEnumerator WinSequence() {
         yield return new WaitForSeconds(.5f);
         rigid.velocity = Vector2.zero;
         winsequence = true;
         //go down
         while (
             Vector3.Distance(transform.position, winPos.position) > .1f 
-            // && 
-            // Quaternion.Angle(transform.rotation, winPos.rotation) < 2f
+            && 
+            Quaternion.Angle(transform.rotation, winPos.rotation) > 2f
             ) {
             
             transform.position = Vector3.Lerp(transform.position, winPos.position, .6f * Time.deltaTime);
@@ -161,6 +168,19 @@ public class Goo : MonoBehaviour {
         //walk
         rigid.velocity = winVelocity;
         
+        //Show Halo
+        var a = 0f;
+        while (true) {
+            a += Time.deltaTime*2;
+            var haloColor = halo.color;
+            haloColor.a = a;
+            halo.color = haloColor;
+            if (a >= 1f) {
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        
         yield return new WaitForSeconds(3f);
         //fade out
         while (spriteRenderer.color.a > 0f) {
@@ -170,10 +190,12 @@ public class Goo : MonoBehaviour {
             halo.color = c;
             yield return new WaitForEndOfFrame();
         }
-        yield return new WaitForSeconds(1f);
-        winsequence = false;
-        win.Stop();
-        game.Reset();
+        yield return new WaitForSeconds(2f);
+        // SceneManager.LoadScene("SplashScreen");
+        splash.DoSplash();
+        // winsequence = false;
+        // win.Stop();
+        // game.Reset();
     }
     private IEnumerator DoorPunch() {
         _punching = true;
