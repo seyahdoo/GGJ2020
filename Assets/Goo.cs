@@ -109,6 +109,10 @@ public class Goo : MonoBehaviour {
             Vector2 vel = rigid.velocity;
             vel.x = rightSide ? -winApproachSpeed : winApproachSpeed;
             rigid.velocity = vel;
+            windupLoop.Stop();
+            windup.Stop();
+            otherGoo.windup.Stop();
+            otherGoo.windupLoop.Stop();
             if (otherDoor.WillFinal()) {
                 win.Stop();
                 win.Play();
