@@ -63,20 +63,15 @@ public class Goo : MonoBehaviour {
         anim.Play("idle");
         spriteRenderer.color = Color.white;
         crashing = false;
-        StopAllCoroutines();
     }
     private void Update()
     {
         anim.SetFloat("current_speed", rigid.velocity.magnitude);
-        
         if(winsequence) return;
         
         if (!windupStarted) {
             animTransform.right = rigid.velocity;
         }
-        
-        if (_punching) return;
-        if (crashing) return;
         
         myTouches.Clear();
         foreach (var touch in Input.touches) {
